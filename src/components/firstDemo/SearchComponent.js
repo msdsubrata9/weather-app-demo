@@ -1,0 +1,38 @@
+import React, { useState } from "react";
+import { WEATHER_API, API_KEY, DAILY_WEATHER_API } from "../../utils/Constants";
+import WeatherComponent from "./WeatherComponent";
+import ForcustComponent from "./ForcustComponent";
+
+function SearchComponent() {
+  const [inputText, setInputText] = useState("");
+  const [weatherInfo, setWeatherInfo] = useState(null);
+  const [forcustInfo, setForcustInfo] = useState([]);
+
+  const fetchWeatherData = async () => {
+    const weatherResponse = await fetch(
+      `${WEATHER_API}?q=${inputText}&appid=${API_KEY}`
+    );
+    const forcustResponse = await fetch(
+      `${DAILY_WEATHER_API}?q=${inputText}&appid=${API_KEY}`
+    );
+    const weatherData = await weatherResponse.json();
+    const forcustData = await forcustResponse.json();
+    setWeatherInfo(weatherData);
+    setForcustInfo(forcustData.list);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+      />
+      <button onClick={fetchWeatherData}>Search</button>
+      {weatherInfo && <WeatherComponent weatherInfo={weatherInfo} />}
+      {forcustInfo && <ForcustComponent forcustInfo={forcustInfo} />}
+    </div>
+  );
+}
+
+export default SearchComponent;
