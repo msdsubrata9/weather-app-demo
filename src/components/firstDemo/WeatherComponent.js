@@ -1,6 +1,14 @@
 import React from "react";
 
 function WeatherComponent({ weatherInfo }) {
+  if (weatherInfo.cod === "404") {
+    return (
+      <div>
+        <h1>No weather information available!!!</h1>
+        <h1>{weatherInfo.message}!!!</h1>
+      </div>
+    );
+  }
   const { humidity, temp } = weatherInfo?.main;
   const { name } = weatherInfo;
   const { speed } = weatherInfo?.wind;

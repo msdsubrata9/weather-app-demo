@@ -9,16 +9,20 @@ function SearchComponent() {
   const [forcustInfo, setForcustInfo] = useState([]);
 
   const fetchWeatherData = async () => {
-    const weatherResponse = await fetch(
-      `${WEATHER_API}?q=${inputText}&appid=${API_KEY}`
-    );
-    const forcustResponse = await fetch(
-      `${DAILY_WEATHER_API}?q=${inputText}&appid=${API_KEY}`
-    );
-    const weatherData = await weatherResponse.json();
-    const forcustData = await forcustResponse.json();
-    setWeatherInfo(weatherData);
-    setForcustInfo(forcustData.list);
+    try {
+      const weatherResponse = await fetch(
+        `${WEATHER_API}?q=${inputText}&appid=${API_KEY}`
+      );
+      const forcustResponse = await fetch(
+        `${DAILY_WEATHER_API}?q=${inputText}&appid=${API_KEY}`
+      );
+      const weatherData = await weatherResponse.json();
+      const forcustData = await forcustResponse.json();
+      setWeatherInfo(weatherData);
+      setForcustInfo(forcustData.list);
+    } catch (e) {
+      alert("Location not found" + e);
+    }
   };
 
   return (
