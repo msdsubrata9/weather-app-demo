@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { WEATHER_API, API_KEY, DAILY_WEATHER_API } from "../../utils/Constants";
 import WeatherComponent from "./WeatherComponent";
 import ForcustComponent from "./ForcustComponent";
+import {
+  transformForecastData,
+  transformWeatherData,
+} from "../../utils/DataTransformers";
 
 function SearchComponent() {
   const [inputText, setInputText] = useState("");
@@ -18,8 +22,12 @@ function SearchComponent() {
       );
       const weatherData = await weatherResponse.json();
       const forcustData = await forcustResponse.json();
-      setWeatherInfo(weatherData);
-      setForcustInfo(forcustData.list);
+
+      const transformedWeatherData = transformWeatherData(weatherData);
+      const transformedForecastData = transformForecastData(forcustData);
+
+      setWeatherInfo(transformedWeatherData);
+      setForcustInfo(transformedForecastData);
     } catch (e) {
       alert("Location not found" + e);
     }

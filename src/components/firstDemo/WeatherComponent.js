@@ -9,15 +9,14 @@ function WeatherComponent({ weatherInfo }) {
       </div>
     );
   }
-  const { humidity, temp } = weatherInfo?.main;
-  const { name } = weatherInfo;
-  const { speed } = weatherInfo?.wind;
+  console.log("weather information: ", weatherInfo);
+  const { city, humidity, temperature, windSpeed } = weatherInfo;
   return (
     <div>
-      <h1>{name}</h1>
-      <h2>TEMPARATURE: {temp}</h2>
+      <h1>{city}</h1>
+      <h2>TEMPERATURE: {temperature}</h2>
       <h2>HUMIDITY: {humidity}</h2>
-      <h2>WIND SPEED: {speed}</h2>
+      <h2>WIND SPEED: {windSpeed}</h2>
     </div>
   );
 }
